@@ -27,7 +27,7 @@ Lets summarize the steps taken so far; these are common to all boards.
 
 	$ mkdir ~/optee-project
 	$ cd ~/optee-project
-	$ repo init -u https://github.com/ProvenRun/optee_manifest.git -m versal_net.xml
+	$ repo init -u https://github.com/ProvenRun/optee_manifest.git -m versal_net.xml -b versal_net_port
 	$ repo sync -j4 --no-clone-bundle
 	$ cd build
 	$ make -j8 toolchains
