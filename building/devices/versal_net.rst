@@ -77,14 +77,14 @@ JTAG Boot to U-Boot
 ===================
 
 .. note::
-	This section assumes that PetaLinux 2023.2 tools such as ``hw_server`` and ``xsdb`` are
-	available in the ``PATH``. They can be downloaded and `installed`_ from the AMD-Xilinx
-	website (`Downloads`_).
-	
-	The user these executables are run with should also have the correct UNIX access rights
-	to open the underlying USB device nodes. Most of the time adding said user to the
-	``dialout`` UNIX group is enough on Ubuntu/Debian-based systems. Otherwise, run
-	``hw_server`` as root (see below).
+   This section assumes that PetaLinux 2023.2 tools such as ``hw_server`` and ``xsdb`` are
+   available in the ``PATH``. They can be downloaded and `installed`_ from the AMD-Xilinx
+   website (`Downloads`_).
+   
+   The user these executables are run with should also have the correct UNIX access rights
+   to open the underlying USB device nodes. Most of the time adding said user to the
+   ``dialout`` UNIX group is enough on Ubuntu/Debian-based systems. Otherwise, run
+   ``hw_server`` as root (see below).
 
 To run the bootable image ``BOOT.BIN`` via JTAG, configure the boot switches for JTAG boot
 then power up the board.
@@ -152,6 +152,55 @@ OP-TEE services should have been started at this point and you run the ``xtest``
 	OP-TEE embedded distrib for versal-net-vnx-b2197-revA
 	buildroot login: root
 	# xtest
+
+Testing
+*******
+
+RPMB
+====
+
+Tracked by R-11 requirement.
+
+.. warning::
+   RPMB support is disabled by default because writing the RPMB key is an irreversible operation.
+   To enable it, please modify the Versal configuration file (``core/arch/arm/plat-versal/conf.mk``)
+   with the following patch.
+
+.. code-block:: diff
+   :emphasize-lines: 7,8
+   --- a/core/arch/arm/plat-versal/conf.mk
+   +++ b/core/arch/arm/plat-versal/conf.mk
+   @@ -42,7 +42,7 @@ else
+    $(call force,CFG_ARM32_core,y)
+    endif
+    
+   -CFG_RPMB_FS ?= n
+   +CFG_RPMB_FS ?= y
+    CFG_RPMB_TESTKEY ?= y
+    CFG_RPMB_WRITE_KEY ?=y
+    
+
+.. note::
+   This patch enables RPMB support in OP-TEE and makes it use a hardcoded development key.
+   To use the hardware-bound key, the ``CFG_RPMB_TESTKEY`` configuration option must be disabled
+   and the NVM service must be enabled in the PLM.
+
+RPMB support can be verified with OP-TEE debug logs enabled:
+
+.. code-block::
+   :emphasize-lines: 9,10,11
+	D/TC:?? 0 tee_rpmb_init:1114 RPMB: Syncing device information
+	D/TC:?? 0 tee_rpmb_init:1122 RPMB: RPMB size is 2*128 KB
+	D/TC:?? 0 tee_rpmb_init:1123 RPMB: Reliable Write Sector Count is 1
+	D/TC:?? 0 tee_rpmb_init:1150 RPMB INIT: Deriving key
+	D/TC:?? 0 tee_rpmb_key_gen:302 RPMB: Using test key
+	D/TC:?? 0 tee_rpmb_init:1165 RPMB INIT: Verifying Key
+	E/TC:?? 0 tee_rpmb_verify_key_sync_counter:1013 Verify key returning 0xffff0008
+	D/TC:?? 0 tee_rpmb_init:1173 RPMB INIT: Auth key not yet written
+	D/TC:?? 0 tee_rpmb_write_and_verify_key:1075 RPMB INIT: Writing Key value:
+	D/TC:?? 0 tee_rpmb_write_and_verify_key:1076 00000000222abd30  d3 eb 3e c3 6e 33 4c 9f  98 8c e2 c0 b8 59 54 61  
+	D/TC:?? 0 tee_rpmb_write_and_verify_key:1076 00000000222abd40  0d 2b cf 86 64 84 4d f2  ab 56 e6 c6 1b b7 01 e4 
+	D/TC:?? 0 tee_rpmb_write_and_verify_key:1080 RPMB INIT: Verifying Key
 
 .. _Downloads: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/2023-2.html
 
