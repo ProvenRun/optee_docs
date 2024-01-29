@@ -15,8 +15,8 @@ in this configuration. So you will need to obtain the following:
 * U-Boot source tree archive compatible with this OP-TEE port
 * Linux source tree archive compatible with this OP-TEE port
 * versal-net-bsp folder with:
-   * ksb-hw-patched-raw_20231113_115133.pdi
-   * system_20231113_115133_optee.dtb
+  * ksb-hw-patched-raw_20231113_115133.pdi
+  * system_20231113_115133_optee.dtb
 
 Configuring and building for Versal Net
 ***************************************
@@ -167,17 +167,18 @@ Tracked by R-11 requirement.
    with the following patch.
 
 .. code-block:: diff
-   --- a/core/arch/arm/plat-versal/conf.mk
-   +++ b/core/arch/arm/plat-versal/conf.mk
-   @@ -42,7 +42,7 @@ else
-    $(call force,CFG_ARM32_core,y)
-    endif
-    
-   -CFG_RPMB_FS ?= n
-   +CFG_RPMB_FS ?= y
-    CFG_RPMB_TESTKEY ?= y
-    CFG_RPMB_WRITE_KEY ?=y
-    
+
+	--- a/core/arch/arm/plat-versal/conf.mk
+	+++ b/core/arch/arm/plat-versal/conf.mk
+	@@ -42,7 +42,7 @@ else
+	 $(call force,CFG_ARM32_core,y)
+	 endif
+	 
+	-CFG_RPMB_FS ?= n
+	+CFG_RPMB_FS ?= y
+	 CFG_RPMB_TESTKEY ?= y
+	 CFG_RPMB_WRITE_KEY ?=y
+	 
 
 .. note::
    This patch enables RPMB support in OP-TEE and makes it use a hardcoded development key.
@@ -186,7 +187,8 @@ Tracked by R-11 requirement.
 
 RPMB support can be verified with OP-TEE debug logs enabled:
 
-.. code-block::
+.. code-block:: bash
+
 	D/TC:?? 0 tee_rpmb_init:1114 RPMB: Syncing device information
 	D/TC:?? 0 tee_rpmb_init:1122 RPMB: RPMB size is 2*128 KB
 	D/TC:?? 0 tee_rpmb_init:1123 RPMB: Reliable Write Sector Count is 1
