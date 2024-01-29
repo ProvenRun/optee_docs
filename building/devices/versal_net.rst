@@ -15,8 +15,8 @@ in this configuration. So you will need to obtain the following:
 * U-Boot source tree archive compatible with this OP-TEE port
 * Linux source tree archive compatible with this OP-TEE port
 * versal-net-bsp folder with:
-  * ksb-hw-patched-raw_20231113_115133.pdi
-  * system_20231113_115133_optee.dtb
+   * ksb-hw-patched-raw_20231113_115133.pdi
+   * system_20231113_115133_optee.dtb
 
 Configuring and building for Versal Net
 ***************************************
@@ -167,7 +167,6 @@ Tracked by R-11 requirement.
    with the following patch.
 
 .. code-block:: diff
-   :emphasize-lines: 7,8
    --- a/core/arch/arm/plat-versal/conf.mk
    +++ b/core/arch/arm/plat-versal/conf.mk
    @@ -42,7 +42,7 @@ else
@@ -188,7 +187,6 @@ Tracked by R-11 requirement.
 RPMB support can be verified with OP-TEE debug logs enabled:
 
 .. code-block::
-   :emphasize-lines: 9,10,11
 	D/TC:?? 0 tee_rpmb_init:1114 RPMB: Syncing device information
 	D/TC:?? 0 tee_rpmb_init:1122 RPMB: RPMB size is 2*128 KB
 	D/TC:?? 0 tee_rpmb_init:1123 RPMB: Reliable Write Sector Count is 1
