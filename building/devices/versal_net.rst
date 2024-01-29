@@ -12,11 +12,11 @@ Prerequisites
 Public AMD-Xilinx U-Boot and Linux git repository do not allow to properly boot Versal Net
 in this configuration. So you will need to obtain the following:
 
-* U-Boot source tree archive compatible with this OP-TEE port
-* Linux source tree archive compatible with this OP-TEE port
-* versal-net-bsp folder with:
-  * ksb-hw-patched-raw_20231113_115133.pdi
-  * system_20231113_115133_optee.dtb
+    - U-Boot source tree archive compatible with this OP-TEE port
+    - Linux source tree archive compatible with this OP-TEE port
+    - versal-net-bsp folder with:
+        - ksb-hw-patched-raw_20231113_115133.pdi
+        - system_20231113_115133_optee.dtb
 
 Configuring and building for Versal Net
 ***************************************
@@ -69,9 +69,9 @@ Booting the image
 
 The ADKv2 debug module exposes 4 USB interfaces to the Linux host:
 
-* The third one, usually ``/dev/ttyUSB2`` is used by U-Boot and Linux for their console
-* The fourth one, usually ``/dev/ttyUSB3`` displays PLM, TF-A and OP-TEE traces
-  (OP-TEE traces will be moved to the other UART in a future updage)
+    - The third one, usually ``/dev/ttyUSB2`` is used by U-Boot and Linux for their console
+    - The fourth one, usually ``/dev/ttyUSB3`` displays PLM, TF-A and OP-TEE traces
+      (OP-TEE traces will be moved to the other UART in a future updage)
 
 JTAG Boot to U-Boot
 ===================
