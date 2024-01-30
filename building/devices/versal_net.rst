@@ -202,7 +202,7 @@ NVM
 [Tracked by requirement R-8]
 
 .. note::
-	This test require the ``xilnvm`` service to be enabled in the PLM.
+	This test requires the ``xilnvm`` service to be enabled in the PLM.
 
 
 This test is available in the ``versal`` testsuite in ``xtest``:
@@ -239,7 +239,7 @@ PUF
 [Tracked by requirement R-9]
 
 .. note::
-	This test require the ``xilnvm`` and ``xilpuf`` services to be enabled
+	This test requires the ``xilnvm`` and ``xilpuf`` services to be enabled
 	in the PLM.
 
 This test is available in the ``versal`` testsuite in ``xtest``:
