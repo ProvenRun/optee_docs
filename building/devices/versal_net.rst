@@ -233,6 +233,42 @@ This test is available in the ``versal`` testsuite in ``xtest``:
 	3 test cases were skipped
 	TEE test application done!
 
+PUF
+===
+
+[Tracked by requirement R-9]
+
+.. note::
+	This test require the ``xilnvm`` and ``xilpuf`` services to be enabled
+	in the PLM.
+
+This test is available in the ``versal`` testsuite in ``xtest``:
+
+.. code-block:: console
+
+	# xtest -t versal 1020
+	Test ID: 1020
+	Run test suite with level=0
+
+	TEE test application started over default TEE instance
+	######################################################
+	#
+	# versal
+	#
+	######################################################
+
+	* versal_1020 Versal Test PUF
+	o versal_1020.1 Versal PUF test
+	  versal_1020.1 OK
+	  versal_1020 OK
+	+-----------------------------------------------------
+	Result of testsuite versal filtered by "1020":
+	versal_1020 OK
+	+-----------------------------------------------------
+	2 subtests of which 0 failed
+	1 test case of which 0 failed
+	3 test cases were skipped
+	TEE test application done!
 
 RPMB
 ====
