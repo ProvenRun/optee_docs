@@ -343,6 +343,46 @@ RPMB support can be verified with OP-TEE debug logs enabled:
 	D/TC:?? 0 tee_rpmb_write_and_verify_key:1076 00000000222abd40  0d 2b cf 86 64 84 4d f2  ab 56 e6 c6 1b b7 01 e4 
 	D/TC:?? 0 tee_rpmb_write_and_verify_key:1080 RPMB INIT: Verifying Key
 
+PKI
+===
+
+.. note::
+	ECDSA keypair pairwise consistency tests are enabled by default. They can be
+	disabled in ``core/arch/arm/plat-versal/conf.mk`` by setting the ``CFG_VERSAL_PKI_PWCT``
+	configuration option to ``n``.
+
+PKI engine tests can be run from the command line with ``xtest``:
+
+.. code-block:: console
+
+	# xtest -t versal 1040
+	Test ID: 1040
+	Run test suite with level=0
+	
+	TEE test application started over default TEE instance
+	######################################################
+	#
+	# versal
+	#
+	######################################################
+
+	* versal_1040 Versal Test PKI
+	o versal_1040.1 Versal PKI - Sign/Verify P256
+	  versal_1040.1 OK
+	o versal_1040.2 Versal PKI - Sign/Verify P384
+	  versal_1040.2 OK
+	o versal_1040.3 Versal PKI - Sign/Verify P521
+	  versal_1040.3 OK
+	  versal_1040 OK
+	+-----------------------------------------------------
+	Result of testsuite versal filtered by "1040":
+	versal_1040 OK
+	+-----------------------------------------------------
+	4 subtests of which 0 failed
+	1 test case of which 0 failed
+	3 test cases were skipped
+	TEE test application done!
+
 .. _Downloads: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/2023-2.html
 
 .. _installed: https://docs.xilinx.com/r/en-US/ug1144-petalinux-tools-reference-guide/Installing-the-PetaLinux-Tool
