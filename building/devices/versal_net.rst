@@ -270,6 +270,33 @@ This test is available in the ``versal`` testsuite in ``xtest``:
 	3 test cases were skipped
 	TEE test application done!
 
+HUK
+===
+
+The Versal Hardware Unique Key driver can use several AES-GCM key sources
+to derive the HUK:
+
+	- eFUSE USR 0
+	- eFUSE USR 1
+	- PUF KEK
+	- AES User Key 0
+
+Which source is used can be configured in ``core/arch/arm/plat-versal/conf.mk``:
+
+.. code-block:: makefile
+
+	CFG_VERSAL_DUMMY_DNA ?= y
+	CFG_VERSAL_HUK ?= y
+	# AES-GCM supported key sources for HUK:
+	#     6  : eFUSE USR 0
+	#     7  : eFuse USR 1
+	#    11  : PUF KEK
+	#    12  : AES User Key 0 (devel)
+	CFG_VERSAL_HUK_KEY ?= 12
+	ifneq ($(CFG_VERSAL_HUK_KEY),$(filter 6 7 11 12,$(firstword $(CFG_VERSAL_HUK_KEY))))
+	$(error Invalid value: CFG_VERSAL_HUK_KEY=$(CFG_VERSAL_HUK_KEY))
+	endif
+
 RPMB
 ====
 
