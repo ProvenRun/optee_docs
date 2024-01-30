@@ -162,7 +162,6 @@ GPIO
 [Tracked by requirement R-4]
 
 .. note::
-
 	Fully testing this requires plugging an actual load on the corresponding GPIO pin.
 
 	The pin used can be modified in ``core/pta/versal/test_pta.c`` by changing ``GPIO_TEST_PIN_ID``.
@@ -196,6 +195,44 @@ This test is available in the ``versal`` testsuite in ``xtest``:
 	1 test case of which 0 failed
 	3 test cases were skipped
 	TEE test application done!
+
+NVM
+===
+
+[Tracked by requirement R-8]
+
+.. note::
+	This test require the ``xilnvm`` service to be enabled in the PLM.
+
+
+This test is available in the ``versal`` testsuite in ``xtest``:
+
+.. code-block:: console
+
+	# xtest -t versal 1010
+	Test ID: 1010
+	Run test suite with level=0
+
+	TEE test application started over default TEE instance
+	######################################################
+	#
+	# versal
+	#
+	######################################################
+
+	* versal_1010 Versal Test NVM
+	o versal_1010.1 Versal NVM test
+	  versal_1010.1 OK
+	  versal_1010 OK
+	+-----------------------------------------------------
+	Result of testsuite versal filtered by "1010":
+	versal_1010 OK
+	+-----------------------------------------------------
+	2 subtests of which 0 failed
+	1 test case of which 0 failed
+	3 test cases were skipped
+	TEE test application done!
+
 
 RPMB
 ====
