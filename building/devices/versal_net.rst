@@ -26,7 +26,7 @@ Fetching source code
 
 The default build is mostly automated and follow generic OP-TEE build procedure:
 
-.. code-block:: bash
+.. code-block:: console
 
 	$ mkdir ~/optee-project
 	$ cd ~/optee-project
@@ -38,7 +38,7 @@ Adding AMD-Xilinx specific components
 
 Copy the versal-net-bsp folder to the ``optee-project`` directory:
 
-.. code-block:: bash
+.. code-block:: console
 
 	$ cp -a <path-to>/versal-net-bsp .
 
@@ -50,14 +50,14 @@ Building the bootimage
 
 Let's prepare the toolchains:
 
-.. code-block:: bash
+.. code-block:: console
 
 	$ cd build
 	$ make -j8 toolchains
 
 At this point we have a working directory ``~/optee-project`` with all the required toolchains.
 
-.. code-block:: bash
+.. code-block:: console
 
 	$ make -j8
 	$ make -j8 bootimage
@@ -91,13 +91,13 @@ then power up the board.
 
 In one terminal; start ``hw_server``:
 
-.. code-block:: bash
+.. code-block:: console
 
 	$ sudo hw_server
 
 Then in another terminal, run the following commands:
 
-.. code-block:: bash
+.. code-block:: console
 
 	$ xsdb
 	rlwrap: warning: your $TERM is 'xterm-256color' but rlwrap couldn't find it in the terminfo database. Expect some problems.
@@ -120,7 +120,7 @@ Booting Linux and running tests
 To properly boot Linux with the current configuration, stop automatic boot by pressing the spacebar to get to
 U-Boot prompt, the run the following command:
 
-.. code-block:: bash
+.. code-block:: console
 
 	U-Boot 2023.01 (Jan 23 2024 - 10:26:16 +0100)
 	 
@@ -147,7 +147,7 @@ U-Boot prompt, the run the following command:
 When Linux has completed its boot sequence, you can login as ``root`` without any password. All
 OP-TEE services should have been started at this point and you run the ``xtest`` tool to run OP-TEE tests:
 
-.. code-block:: bash
+.. code-block:: console
 
 	OP-TEE embedded distrib for versal-net-vnx-b2197-revA
 	buildroot login: root
@@ -156,10 +156,51 @@ OP-TEE services should have been started at this point and you run the ``xtest``
 Testing
 *******
 
+GPIO
+====
+
+[Tracked by requirement R-4]
+
+.. note::
+
+	Fully testing this requires plugging an actual load on the corresponding GPIO pin.
+
+	The pin used can be modified in ``core/pta/versal/test_pta.c`` by changing ``GPIO_TEST_PIN_ID``.
+
+This test is available in the ``versal`` testsuite in ``xtest``:
+
+.. code-block:: console
+
+	# xtest -t versal 1000
+	Test ID: 1000
+	Run test suite with level=0
+	
+	TEE test application started over default TEE instance
+	######################################################
+	#
+	# versal
+	#
+	######################################################
+
+	* versal_1000 Versal Test GPIO
+	o versal_1000.1 Versal PMC GPIO test
+	  versal_1000.1 OK
+	o versal_1000.2 Versal PS GPIO test
+	  versal_1000.2 OK
+	  versal_1000 OK
+	+-----------------------------------------------------
+	Result of testsuite versal filtered by "1000":
+	versal_1000 OK
+	+-----------------------------------------------------
+	3 subtests of which 0 failed
+	1 test case of which 0 failed
+	3 test cases were skipped
+	TEE test application done!
+
 RPMB
 ====
 
-Tracked by R-11 requirement.
+[Tracked by requirement R-11]
 
 .. warning::
    RPMB support is disabled by default because writing the RPMB key is an irreversible operation.
