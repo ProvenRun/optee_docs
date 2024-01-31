@@ -383,6 +383,24 @@ PKI engine tests can be run from the command line with ``xtest``:
 	3 test cases were skipped
 	TEE test application done!
 
+Benchmarks
+----------
+
+PKI engine benchmarks can be run with the following command lines:
+
+	- Server-side benchmarks:
+
+	.. code-block:: console
+
+		# xtest -t versal 1050
+
+	- Client-side benchmarks:
+
+	.. code-block:: console
+
+		# xtest -t versal 1060
+
+
 .. _Downloads: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools/2023-2.html
 
 .. _installed: https://docs.xilinx.com/r/en-US/ug1144-petalinux-tools-reference-guide/Installing-the-PetaLinux-Tool
