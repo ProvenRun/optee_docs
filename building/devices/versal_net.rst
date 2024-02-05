@@ -15,7 +15,7 @@ in this configuration. So you will need to obtain the following:
     - U-Boot source tree archive compatible with this OP-TEE port
     - Linux source tree archive compatible with this OP-TEE port
     - versal-net-bsp folder with:
-        - ksb-hw-patched-raw_20231113_115133.pdi
+        - ksb-hw-optee-20240125.pdi
         - system_20231113_115133_optee.dtb
 
 Configuring and building for Versal Net
