@@ -220,6 +220,60 @@ The Versal Net OP-TEE port includes an FPGA loader pseudo-TA that can be used to
 	the amount of shared memory available to OP-TEE. Bigger bitsreams
 	should be loaded at boot time.
 
+NVM
+===
+
+The Versal Net OP-TEE provides eFuses read and write APIs to other OP-TEE
+components. The API is available in ``core/include/drivers/versal_nvm.h``.
+
+.. code-block:: c
+	:caption: Example - Read the DNA value
+
+	#include <drivers/versal_nvm.h>
+
+	TEE_Result read_dna(uint32_t *dna)
+	{
+		return versal_efuse_read_dna(dna, EFUSE_DNA_LEN);
+	}
+
+.. code-block:: c
+	:caption: Example - Write Black Obfuscation IV
+
+	#include <drivers/versal_nvm.h>
+
+	TEE_Result write_black_iv(uint32_t *iv)
+	{
+		struct versal_efuse_ivs ivs = { };
+
+		ivs.prgm_blk_obfus_iv = 1;
+		memcpy(ivs.blk_obfus_iv, iv, EFUSE_IV_LEN);
+
+		return versal_efuse_write_iv(&ivs);
+	}
+
+PUF
+===
+
+The Versal Net Physically Unclonable Function is support on the OP-TEE port.
+The API is available in ``core/include/drivers/versal_puf.h``.
+
+.. code-block:: c
+	:caption: Example - PUF Registration
+
+	#include <drivers/versal_puf.h>
+
+	TEE_Result register_puf(struct versal_puf_data *data)
+	{
+		struct versal_puf_cfg cfg = { };
+
+		cfg.puf_operation = VERSAL_PUF_REGISTRATION;
+		cfg.shutter_value = VERSAL_PUF_SHUTTER_VALUE;
+		cfg.global_var_filter = VERSAL_PUF_GLBL_VAR_FLTR_OPTION;
+		cfg.read_option = VERSAL_PUF_READ_FROM_RAM;
+
+		return versal_puf_register(data, &cfg);
+	}
+
 Testing
 *******
 
