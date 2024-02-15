@@ -46,7 +46,7 @@ Then extract Linux and u-boot sources in their respective ``linux`` and ``u-boot
 in ``optee-project`` as well. We now have all the sources needed to build.
 
 .. note::
-	The currnet ``ksb-hw-optee-20240125.pdi`` file expects mailbox requests
+	The current ``ksb-hw-optee-20240125.pdi`` file expects mailbox requests
 	to be sent with IPI ID 5. This should change in a near future to IPI ID 1
 	and the OP-TEE port already includes this evolution.
 
@@ -174,6 +174,19 @@ OP-TEE services should have been started at this point and you run the ``xtest``
 	OP-TEE embedded distrib for versal-net-vnx-b2197-revA
 	buildroot login: root
 	# xtest
+	[...]
+	regression_4005.7 FAILED first error at regression_4000.c:605
+	regression_4005 FAILED
+	[...]
+	+----------------------------------------
+	30259 subtests of which 2 failed
+	133 test cases of which 1 failed
+	0 test cases were skipped
+	TEE test application done!
+
+.. note::
+	The ``regression 4005.7`` test failure is a known documented failure. The Versal Net
+	hardware only accepts word-aligned AAD chunks of data.
 
 Features
 ********
