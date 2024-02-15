@@ -197,15 +197,15 @@ Crypto
 The Versal Net OP-TEE port supports the following hardware-backed algorithms:
 
     - ECDSA Key Generation, Signature and Verification for NIST P-256, P-384 and P-521 curves
-	    - This is implemented through a dedicated PKI hardware engine
-		- Key generation for these algorithms makes use of a dedicated hardware TRNG
-	- AES-GCM for 128 and 256-bit keys
-	- RSA 1024, 2048 and 4096
-	- SHA3-384
-	- GMAC
-	- HMAC
-	- TRNG
-	- Other algorithms make use of ARMv8 Crypto Extensions where applicable
+        - This is implemented through a dedicated PKI hardware engine
+        - Key generation for these algorithms makes use of a dedicated hardware TRNG
+    - AES-GCM for 128 and 256-bit keys
+    - RSA 1024, 2048 and 4096
+    - SHA3-384
+    - GMAC
+    - HMAC
+    - TRNG
+    - Other algorithms make use of ARMv8 Crypto Extensions where applicable
 
 FPGA Loader
 ===========
