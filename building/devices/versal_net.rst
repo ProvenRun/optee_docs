@@ -153,6 +153,73 @@ OP-TEE services should have been started at this point and you run the ``xtest``
 	buildroot login: root
 	# xtest
 
+Features
+********
+
+FPGA Loader
+===========
+
+The Versal Net OP-TEE port includes an FPGA loader pseudo-TA that can be used to load bitsreams into the PL:
+
+.. code-block:: c
+
+	#define PTA_VERSAL_FPGA_UUID { 0xa6b493c0, 0xe100, 0x4a13, \
+		{ 0x9b, 0x00, 0xbc, 0xe4, 0x2d, 0x53, 0xce, 0xd8 } }
+
+	/**
+	* Write FPGA bitstream
+	*
+	* [in]		memref[0].buffer	FPGA bitstream buffer
+	* [in]		memref[0].size		FPGA bitstream buffer size
+	*
+	* Return codes:
+	* TEE_SUCCESS - Invoke command success
+	* TEE_ERROR_BAD_PARAMETERS - Incorrect input param
+	* TEE_ERROR_OUT_OF_MEMORY - Could not alloc internal buffer
+	* TEE_ERROR_GENERIC - PLM failure
+	*/
+	#define PTA_VERSAL_FPGA_WRITE		0x0
+
+	TEE_Result load_bitsream(uint8_t *bistream, size_t size)
+	{
+		TEEC_Context ctx;
+		TEEC_Session sess;
+		TEEC_Operation op;
+		TEEC_UUID uuid = PTA_VERSAL_FPGA_UUID;
+		TEE_Result ret = TEE_SUCCESS;
+		uint32_t origin;
+
+		ret = TEEC_InitializeContext(NULL, &ctx);
+		if (ret != TEEC_SUCCESS)
+			return ret;
+
+		/* Open a session with the TA */
+		ret = TEEC_OpenSession(&ctx, &sess, &uuid,
+			       TEEC_LOGIN_PUBLIC, NULL, NULL, &origin);
+		if (ret != TEEC_SUCCESS)
+			goto out;
+
+		memset(&op, 0, sizeof(op));
+		op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_TEMP_INPUT,
+						 TEEC_NONE, TEEC_NONE, TEEC_NONE);
+
+		op.params[0].tmpref.buffer = bitstream;
+		op.params[0].tmpref.size = size;
+
+		ret = TEEC_InvokeCommand(&sess, PTA_VERSAL_FPGA_WRITE,
+					 &op, &origin);
+
+		TEEC_CloseSession(&sess);
+	out:
+		TEEC_FinalizeContext(&ctx);
+		return ret;
+	}
+
+.. note::
+	Bitsreams loaded through this means have their size limited by
+	the amount of shared memory available to OP-TEE. Bigger bitsreams
+	should be loaded at boot time.
+
 Testing
 *******
 
