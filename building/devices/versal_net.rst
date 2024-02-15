@@ -45,6 +45,28 @@ Copy the versal-net-bsp folder to the ``optee-project`` directory:
 Then extract Linux and u-boot sources in their respective ``linux`` and ``u-boot`` folder
 in ``optee-project`` as well. We now have all the sources needed to build.
 
+.. note::
+	The currnet ``ksb-hw-optee-20240125.pdi`` file expects mailbox requests
+	to be sent with IPI ID 5. This should change in a near future to IPI ID 1
+	and the OP-TEE port already includes this evolution.
+
+	The following patch must be applied to work with versions of the PDI file
+	that are still using the old IPI ID.
+	
+	.. code-block:: diff
+
+		--- a/core/arch/arm/plat-versal/conf.mk
+		+++ b/core/arch/arm/plat-versal/conf.mk
+		@@ -64,7 +64,7 @@ CFG_VERSAL_TRACE_PLM ?= n
+		$(call force, CFG_VERSAL_MBOX,y)
+		
+		# MBOX configuration
+		-CFG_VERSAL_MBOX_IPI_ID ?= 1
+		+CFG_VERSAL_MBOX_IPI_ID ?= 5
+		
+		# PM driver
+		CFG_VERSAL_PM ?= y
+
 Building the bootimage
 ======================
 
