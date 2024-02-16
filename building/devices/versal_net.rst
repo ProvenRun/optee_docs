@@ -200,7 +200,7 @@ The Versal Net OP-TEE port supports the following hardware-backed algorithms:
         - This is implemented through a dedicated PKI hardware engine
         - Key generation for these algorithms makes use of a dedicated hardware TRNG
     - AES-GCM for 128 and 256-bit keys
-    - RSA 1024, 2048 and 4096
+    - RSA 2048, 3072 and 4096
     - SHA3-384
     - GMAC
     - HMAC
