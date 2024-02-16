@@ -213,6 +213,7 @@ FPGA Loader
 The Versal Net OP-TEE port includes an FPGA loader pseudo-TA that can be used to load bitsreams into the PL:
 
 .. code-block:: c
+	:caption: Sample code to load a bitsream from Linux
 
 	#define PTA_VERSAL_FPGA_UUID { 0xa6b493c0, 0xe100, 0x4a13, \
 		{ 0x9b, 0x00, 0xbc, 0xe4, 0x2d, 0x53, 0xce, 0xd8 } }
@@ -265,6 +266,10 @@ The Versal Net OP-TEE port includes an FPGA loader pseudo-TA that can be used to
 		TEEC_FinalizeContext(&ctx);
 		return ret;
 	}
+
+The example above shows a ``load_bitsream()`` function that expects a buffer
+(and its size) as a parameter. This buffer holds the actual bitsream binary
+loaded from Linux filesystem for instance.
 
 .. note::
 	Bitsreams loaded through this means have their size limited by
